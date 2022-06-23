@@ -13,7 +13,7 @@ main()
 
 const io = new Server(7777, {
   cors: {
-    origin: "http://185.165.162.20:25565",
+    origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true
@@ -21,7 +21,6 @@ const io = new Server(7777, {
 
 io.on('connection', async (socket) => {
   const allMessages = await prisma.message.findMany()
-  console.log('allMessages', allMessages)
   setTimeout(() => {
     io.to(socket.id).emit('all-messages', allMessages)
   }, 500)

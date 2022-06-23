@@ -10,6 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  auth      String
+  Session   Session[]
+}
+
+model Session {
+  id        Int    @id @default(autoincrement())
+  sessionId String @unique
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+
+
 model Message {
   id        Int      @id @default(autoincrement())
   content   String
